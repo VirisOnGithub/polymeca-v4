@@ -11,6 +11,8 @@ useHead({
   }
 })
 
+const route = useRoute()
+
 const title = 'Nuxt Starter Template'
 const description = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
 
@@ -40,8 +42,6 @@ const socials = [
     icon: 'i-simple-icons-facebook'
   }
 ]
-
-const address = ['POLYTECH LYON, ', '15 boulevard André Laterjet,', '69100 Villeurbanne']
 </script>
 
 <template>
@@ -66,6 +66,10 @@ const address = ['POLYTECH LYON, ', '15 boulevard André Laterjet,', '69100 Vill
     </UHeader>
 
     <UMain class="bg-black font-[Racing_Sans_One]">
+      <div
+        v-if="!route.meta.hideFrontSpace"
+        class="h-50"
+      />
       <NuxtPage />
     </UMain>
 

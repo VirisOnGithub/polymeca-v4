@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  hideFrontSpace: true
+})
 </script>
 
 <template>
