@@ -12,7 +12,7 @@ const bureau = [
     <h1 class="text-center text-4xl my-4">
       Bureau
     </h1>
-    <div class="grid grid-cols-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-center">
       <div
         v-for="member in bureau"
         :key="member.role"

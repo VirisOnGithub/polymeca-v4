@@ -1,10 +1,12 @@
 <script setup>
+import CustomHeader from './components/CustomHeader.vue'
+
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
   ],
   link: [
-    { rel: 'icon', href: '/favicon.ico' }
+    { rel: 'icon', href: '/logo.png' }
   ],
   htmlAttrs: {
     lang: 'en'
@@ -13,15 +15,15 @@ useHead({
 
 const route = useRoute()
 
-const title = 'Nuxt Starter Template'
-const description = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
+const title = 'PolyMeca'
+const description = 'Association d\'ingénieurs de Polytech Lyon avec un seul but en tête : les voitures !'
 
 useSeoMeta({
   title,
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
+  ogImage: '/logo.png',
   twitterCard: 'summary_large_image'
 })
 
@@ -46,7 +48,7 @@ const socials = [
 
 <template>
   <UApp>
-    <UHeader class="absolute w-full">
+    <!-- <UHeader class="absolute w-full">
       <template #title>
         <NuxtLink to="/">
           <AppLogo class="h-10" />
@@ -63,9 +65,10 @@ const socials = [
           variant="ghost"
         />
       </template>
-    </UHeader>
+    </UHeader> -->
+    <CustomHeader />
 
-    <UMain class="bg-black font-[Racing_Sans_One]">
+    <UMain class="bg-black font-[Racing_Sans_One] p-5">
       <div
         v-if="!route.meta.hideFrontSpace"
         class="h-50"

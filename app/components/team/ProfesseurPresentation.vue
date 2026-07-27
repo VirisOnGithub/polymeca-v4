@@ -9,7 +9,7 @@ const teachers = [
     <h1 class="text-center text-4xl my-4">
       Professeurs
     </h1>
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-1 lg:grid-cols-2">
       <div
         v-for="member in teachers"
         :key="member.role"

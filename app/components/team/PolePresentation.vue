@@ -44,7 +44,7 @@ const poles = [
     <h1 class="text-center text-4xl my-4">
       Pôles
     </h1>
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       <div
         v-for="member in poles"
         :key="member.role"
