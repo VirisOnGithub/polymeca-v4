@@ -14,9 +14,11 @@ const bureau = [
     </h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-center">
       <div
-        v-for="member in bureau"
+        v-for="(member, index) in bureau"
         :key="member.role"
         class="bg-neutral-900 m-2 p-4 rounded-2xl"
+        data-aos="zoom-in-up"
+        :data-aos-delay="index * 100"
       >
         <UIcon
           :name="member.icon"

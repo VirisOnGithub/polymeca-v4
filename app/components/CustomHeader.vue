@@ -1,36 +1,20 @@
 <script setup lang="ts">
 const route = useRoute()
-
 const mobileOpen = ref(false)
 
 const links = [
-  {
-    label: 'Accueil',
-    to: '/'
-  },
-  {
-    label: 'Équipe',
-    to: '/team'
-  },
-  {
-    label: 'Partenaires',
-    to: '/partnerships'
-  },
-  {
-    label: 'Voiture',
-    to: '/car'
-  },
-  {
-    label: 'Actualités',
-    to: '/news'
-  }
+  { label: 'Accueil', to: '/' },
+  { label: 'Équipe', to: '/team' },
+  { label: 'Partenaires', to: '/partnerships' },
+  { label: 'Voiture', to: '/car' },
+  { label: 'Actualités', to: '/news' }
 ]
 
-const isActive = (path: string) => {
+// Fonction d'activation basée sur la route courante
+const isLinkActive = (path: string) => {
   if (path === '/') {
     return route.path === '/'
   }
-
   return route.path.startsWith(path)
 }
 </script>
@@ -38,82 +22,47 @@ const isActive = (path: string) => {
 <template>
   <header
     class="
-    sticky top-0 z-50
-    border-b border-gray-200/60
-    dark:border-gray-800/60
-    bg-white/80
-    dark:bg-gray-950/80
-    backdrop-blur-xl
-  "
-  >
-    <nav
-      class="
-      mx-auto flex h-20 max-w-7xl
-      items-center justify-between
-      px-4 sm:px-6 lg:px-8
+      sticky top-0 z-50
+      border-b border-gray-200/60 dark:border-gray-800/60
+      bg-white/80 dark:bg-gray-950/80
+      backdrop-blur-xl
+      font-[Racing_Sans_One]
     "
-    >
-      <!-- Logo -->
-
+  >
+    <nav class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
       <NuxtLink
         to="/"
-        class="
-        flex items-center gap-3
-        group
-      "
+        class="flex items-center gap-3 group"
       >
-
         <NuxtImg
           src="/logo.png"
           alt="Logo de PolyMeca"
-          class="
-          h-30 w-30
-          object-contain
-          transition-transform duration-300
-          group-hover:scale-105
-        "
+          class="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
         />
-
       </NuxtLink>
 
-      <!-- Navigation desktop -->
-
-      <div
-        class="
-        hidden md:flex
-        items-center
-        gap-1
-        h-full
-      "
-      >
-        <UButton
+      <div class="hidden md:flex items-center gap-1 h-full">
+        <NuxtLink
           v-for="link in links"
           :key="link.label"
           :to="link.to"
-          variant="ghost"
-          color="neutral"
           :class="[
-            'group relative h-full rounded-none px-4',
-            'transition-all duration-300',
-            'hover:-translate-y-0.5',
-            isActive(link.to)
+            'group relative flex items-center h-full px-4 text-sm font-medium transition-colors duration-300',
+            isLinkActive(link.to)
               ? 'text-primary-500'
-              : 'text-gray-600 dark:text-gray-300'
+              : 'text-gray-600 dark:text-gray-300 hover:text-primary-500'
           ]"
         >
-          <span
-            class="
-            transition-colors
-            duration-300
-            group-hover:text-primary-500
-          "
-          >
-            {{ link.label }}
-          </span>
-        </UButton>
-      </div>
+          <span>{{ link.label }}</span>
 
-      <!-- Bouton mobile -->
+          <span
+            :class="[
+              'absolute bottom-0 left-0 h-0.5 w-full bg-secondary origin-left transition-transform duration-300 ease-out',
+              isLinkActive(link.to) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            ]"
+          />
+        </NuxtLink>
+      </div>
 
       <UButton
         class="md:hidden"
@@ -125,41 +74,20 @@ const isActive = (path: string) => {
     </nav>
   </header>
 
-  <!-- Menu mobile -->
-
   <USlideover
     v-model:open="mobileOpen"
     side="right"
   >
     <template #content>
-      <div
-        class="
-    flex
-    h-full
-    flex-col
-    p-6
-  "
-      >
-        <!-- Header menu -->
-
-        <div
-          class="
-      flex
-      items-center
-      justify-between
-      mb-8
-    "
-        >
+      <div class="flex h-full flex-col p-6">
+        <div class="flex items-center justify-between mb-8">
           <div class="flex items-center gap-3">
             <NuxtImg
               src="/logo.png"
               alt="Logo"
               class="h-10 w-10 object-contain"
             />
-
-            <span class="font-semibold">
-              Menu
-            </span>
+            <span class="font-semibold">Menu</span>
           </div>
 
           <UButton
@@ -170,43 +98,24 @@ const isActive = (path: string) => {
           />
         </div>
 
-        <!-- Liens -->
-
-        <nav
-          class="
-      flex
-      flex-col
-      gap-2
-    "
-        >
+        <nav class="flex flex-col gap-2">
           <NuxtLink
             v-for="link in links"
             :key="link.label"
             :to="link.to"
             :class="[
-              'rounded-lg px-4 py-3',
-              'transition-all duration-200',
-              isActive(link.to)
+              'rounded-lg px-4 py-3 transition-all duration-200',
+              isLinkActive(link.to)
                 ? 'bg-primary-500/10 text-primary-500 font-medium'
-                : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
             ]"
             @click="mobileOpen = false"
           >
-
             {{ link.label }}
-
           </NuxtLink>
         </nav>
 
-        <!-- Bas du menu -->
-
-        <div
-          class="
-      mt-auto
-      border-t
-      pt-6
-    "
-        >
+        <div class="mt-auto border-t pt-6">
           <UButton
             block
             to="/contact"

@@ -9,8 +9,8 @@ const poles = [
   {
     title: 'Pôle Châssis',
     members: 'Lubin',
-    description: 'Concevoir une structure solide, légère et adaptée aux contraintes de la compétition.'
-    // icon: 'i-custom:car-frame'
+    description: 'Concevoir une structure solide, légère et adaptée aux contraintes de la compétition.',
+    icon: 'i-custom-chassis'
   },
   {
     title: 'Pôle Train roulant',
@@ -49,6 +49,7 @@ const poles = [
         v-for="member in poles"
         :key="member.role"
         class="bg-neutral-900 m-2 p-4 rounded-2xl flex gap-4"
+        data-aos="fade-down"
       >
         <div>
           <div class="bg-secondary-300/15 size-15 rounded-2xl grid place-items-center">
