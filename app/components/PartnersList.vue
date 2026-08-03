@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Vue3Marquee } from 'vue3-marquee'
-
 type Company = {
   name: string
   logo: string
@@ -12,8 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Vue3Marquee
-    :clone="true"
+  <UMarquee
     :duration="10"
     class=" bg-gray-100/15"
   >
@@ -23,5 +20,5 @@ const props = defineProps<{
       :src="`/logos/` + partner.logo"
       class="h-10 m-5"
     />
-  </Vue3Marquee>
+  </UMarquee>
 </template>
