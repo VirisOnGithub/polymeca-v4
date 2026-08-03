@@ -20,7 +20,7 @@
           />
 
           <TresGroup
-            :position="[positionX, 1, 0]"
+            :position="[positionX, positionY, 0]"
             :rotation="[rotationX, rotationY, 0]"
           >
             <Suspense>
@@ -46,7 +46,7 @@
           Modèle Original
         </span> -->
 
-        <h1 class="mb-4 text-4xl font-bold text-secondary">
+        <h1 class="mb-4 text-4xl font-bold text-white underline decoration-secondary">
           Premier Modèle
         </h1>
 
@@ -62,7 +62,7 @@
       <section
         class="ml-auto pointer-events-auto max-w-137.5 rounded-2xl border border-white/10 bg-[#161b22]/85 p-10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl"
       >
-        <h2 class="mb-4 text-4xl font-bold text-secondary">
+        <h2 class="mb-4 text-4xl font-bold text-white underline decoration-secondary">
           Caractéristiques
         </h2>
 
@@ -104,26 +104,18 @@
         class="pointer-events-auto ml-auto max-w-137.5 rounded-2xl border border-blue-500/50 bg-[#161b22]/85 p-10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl"
       >
         <span
-          class="mb-4 inline-block rounded-full bg-emerald-500/20 px-3 py-1 text-sm font-semibold text-emerald-400"
+          class="mb-4 inline-block rounded-full bg-secondary/20 px-3 py-1 text-sm font-semibold text-secondary-400"
         >
           En Développement
         </span>
 
-        <h2 class="mb-4 text-4xl font-bold text-white">
-          Le Projet de la Nouvelle
+        <h2 class="mb-4 text-4xl font-bold text-white underline decoration-secondary">
+          Nouvelle voiture
         </h2>
 
         <p class="text-gray-300">
-          Forts de l'expérience acquise avec le premier modèle, nous développons
-          la prochaine génération. Objectifs : réduction de la masse,
-          optimisation de l'aérodynamisme et télémétrie avancée.
+          En route pour un nouveau modèle !
         </p>
-
-        <ul class="mt-4 flex flex-col gap-2 text-gray-200">
-          <li>⚡ Optimisation du rapport poids/puissance</li>
-          <li>🏎️ Nouvelle géométrie de suspension</li>
-          <li>📊 Intégration de capteurs IoT en temps réel</li>
-        </ul>
       </section>
     </div>
   </div>
@@ -136,6 +128,7 @@ import { TresCanvas } from '@tresjs/core'
 const rotationX = ref(0)
 const rotationY = ref(0)
 const positionX = ref(0)
+const positionY = ref(0)
 
 function handleScroll() {
   const scrollTop = window.scrollY || document.documentElement.scrollTop
@@ -145,10 +138,11 @@ function handleScroll() {
 
   const scrollProgress = Math.min(Math.max(scrollTop / maxScroll, 0), 1)
 
-  rotationY.value = scrollProgress * Math.PI * 2
-  rotationX.value = Math.sin(scrollProgress * Math.PI) * 0.1
+  rotationY.value = scrollProgress * Math.PI * 2 + 3
+  rotationX.value = Math.sin(scrollProgress * Math.PI) * 0.4 + 1000
 
   positionX.value = Math.sin(scrollProgress * Math.PI * 2) * 1.5
+  positionY.value = scrollProgress / 3
 }
 
 onMounted(() => {

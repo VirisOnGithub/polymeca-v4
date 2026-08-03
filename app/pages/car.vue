@@ -27,8 +27,18 @@ definePageMeta({
       <div class="text-9xl relative text-center lg:translate-y-[-200%] mb-8">
         La voiture
       </div>
-      <!-- <CarGallery /> -->
       <CompleteCarViewer />
+    </div>
+    <div class="grid place-items-center">
+      <NuxtLink
+        class="m-4 p-4 bg-secondary rounded-xl flex items-center gap-4"
+        to="/gallery"
+      >
+        <span>Voir la galerie photo</span>
+        <UIcon
+          name="lucide:arrow-big-right"
+        />
+      </Nuxtlink>
     </div>
   </div>
 </template>

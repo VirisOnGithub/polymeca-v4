@@ -27,8 +27,6 @@ definePageMeta({
     />
 
     <div class="h-screen lg:h-50" />
-
-    <TeamPresentation />
   </div>
 </template>
 

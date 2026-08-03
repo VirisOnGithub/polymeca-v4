@@ -22,6 +22,10 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: [
+        '@tresjs/cientos',
+        '@tresjs/core',
+        'three',
+        'justified-layout', // CJS
         'vue3-marquee'
       ]
     }
