@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     'nuxt-aos',
     '@nuxt/image',
+    // 'gsap',
     '@tresjs/nuxt'
   ],
 

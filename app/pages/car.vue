@@ -1,50 +1,253 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted, shallowRef } from 'vue'
+import { GLTFModel } from '@tresjs/cientos'
+import { TresCanvas } from '@tresjs/core'
+import gsap from 'gsap'
+
 definePageMeta({
   hideFrontSpace: true
+})
+
+const carGroupRef = shallowRef()
+const cameraRef = shallowRef()
+const isMobile = ref(false)
+
+const slides = [
+  {
+    title: 'Premier Modèle',
+    badge: 'Prototype',
+    description: 'Notre tout premier prototype conçu pour poser les bases de l’aérodynamisme et de la structure.',
+    rotation: [0, 0.5, 0],
+    positionDesktop: [1.5, -0.2, 0],
+    positionMobile: [0, 0.6, 0],
+    cameraZDesktop: 4.5,
+    cameraZMobile: 6.0
+  },
+  {
+    title: 'Caractéristiques',
+    badge: 'Spécifications',
+    description: 'Un véhicule de compétition optimisé pour la performance pure et la légèreté.',
+    specs: {
+      Poids: '317 – 327 kg',
+      Motorisation: 'Honda CBR600R (PC37)',
+      Architecture: 'Châssis tubulaire'
+    },
+    rotation: [0, Math.PI, 0],
+    positionDesktop: [1.5, 0, 0],
+    positionMobile: [0, 0.8, 0],
+    cameraZDesktop: 3.8,
+    cameraZMobile: 5.5
+  },
+  {
+    title: 'Nouvelle voiture',
+    badge: 'En Développement',
+    description: 'En route pour un nouveau modèle intégrant de nouvelles technologies.',
+    rotation: [0, Math.PI * 1.5, -Math.PI / 2 + 0.1],
+    positionDesktop: [1.5, 0.1, 0],
+    positionMobile: [0, 0.7, 0],
+    cameraZDesktop: 2,
+    cameraZMobile: 6.5
+  }
+]
+
+const currentSlide = ref(0)
+
+function updateResponsiveState() {
+  isMobile.value = window.innerWidth < 990
+  animateToSlide(currentSlide.value)
+}
+
+function animateToSlide(index: number) {
+  const slide = slides[index]
+
+  const targetPosY = isMobile.value ? slide.positionMobile[1] : slide.positionDesktop[1]
+  const targetPosX = isMobile.value ? slide.positionMobile[0] : slide.positionDesktop[0]
+  const targetPosZ = isMobile.value ? slide.positionMobile[2] || 0 : slide.positionDesktop[2] || 0
+  const targetCamZ = isMobile.value ? slide.cameraZMobile : slide.cameraZDesktop
+
+  if (carGroupRef.value) {
+    gsap.to(carGroupRef.value.rotation, {
+      x: slide.rotation[0],
+      y: slide.rotation[1],
+      z: slide.rotation[2],
+      duration: 1.2,
+      ease: 'power2.inOut'
+    })
+
+    gsap.to(carGroupRef.value.position, {
+      x: targetPosX,
+      y: targetPosY,
+      z: targetPosZ,
+      duration: 1.2,
+      ease: 'power2.inOut'
+    })
+  }
+
+  if (cameraRef.value) {
+    gsap.to(cameraRef.value.position, {
+      z: targetCamZ,
+      duration: 1.2,
+      ease: 'power2.inOut'
+    })
+  }
+}
+
+function goToSlide(index: number) {
+  if (index !== currentSlide.value) {
+    currentSlide.value = index
+    animateToSlide(index)
+  }
+}
+
+function nextSlide() {
+  if (currentSlide.value < slides.length - 1) {
+    goToSlide(currentSlide.value + 1)
+  }
+}
+
+function prevSlide() {
+  if (currentSlide.value > 0) {
+    goToSlide(currentSlide.value - 1)
+  }
+}
+
+onMounted(() => {
+  updateResponsiveState()
+  window.addEventListener('resize', updateResponsiveState)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateResponsiveState)
 })
 </script>
 
 <template>
-  <div>
-    <NuxtImg
-      src="/car_front.jpg"
-      alt="Photo montrant la voiture en train de concourir"
-      class="z-1"
-    />
-    <!-- <div
-      id="title"
-      class="absolute top-20 md:top-1/2 left-1/2 text-2xl md:text-7xl -translate-1/2 text-center z-10"
-      data-aos="fade-up"
-    >
-      Prêt pour la prochaine aventure ?
-    </div> -->
-    <div
-      id="hero"
-      class="lg:h-100 h-[calc(100%)] left-0 right-0 absolute bg-linear-to-t from-primary to-transparent -translate-y-1/4 lg:-translate-y-1/2 z-2"
-    />
+  <!-- 100 vh - footer - main padding -->
+  <div class="relative h-[calc(100vh-80px-40px)] w-full overflow-hidden bg-[#0d1117] text-white select-none">
+    <div class="absolute inset-0 z-0">
+      <ClientOnly>
+        <TresCanvas clear-color="#0d1117">
+          <TresPerspectiveCamera
+            ref="cameraRef"
+            :position="[0, 1.5, 4.5]"
+            :look-at="[0, 0, 0]"
+          />
 
-    <div class="z-3 relative">
-      <div class="text-9xl relative text-center lg:translate-y-[-200%] mb-8">
-        La voiture
-      </div>
-      <CompleteCarViewer />
+          <TresAmbientLight :intensity="1.2" />
+          <TresDirectionalLight
+            :position="[5, 5, 5]"
+            :intensity="2"
+          />
+          <TresDirectionalLight
+            :position="[-5, -2, -5]"
+            :intensity="0.8"
+            color="#3b82f6"
+          />
+
+          <TresGroup ref="carGroupRef">
+            <Suspense>
+              <GLTFModel
+                path="/models/b.glb"
+                draco
+              />
+            </Suspense>
+          </TresGroup>
+        </TresCanvas>
+      </ClientOnly>
     </div>
-    <div class="grid place-items-center">
-      <NuxtLink
-        class="m-4 p-4 bg-secondary rounded-xl flex items-center gap-4"
-        to="/gallery"
-      >
-        <span>Voir la galerie photo</span>
-        <UIcon
-          name="lucide:arrow-big-right"
-        />
-      </Nuxtlink>
+
+    <div class="relative z-10 flex h-full w-full flex-col justify-between p-4 sm:p-12 pointer-events-none">
+      <div class="flex items-center justify-between pointer-events-auto">
+        <div class="flex gap-2">
+          <button
+            v-for="(_, index) in slides"
+            :key="index"
+            class="h-2 rounded-full transition-all duration-300"
+            :class="currentSlide === index ? 'w-8 bg-secondary-500' : 'w-2 bg-white/20 hover:bg-white/40'"
+            :aria-label="`Aller à la diapositive ${index + 1}`"
+            @click="goToSlide(index)"
+          />
+        </div>
+      </div>
+
+      <div class="mt-auto mb-10 w-full max-w-lg pointer-events-auto">
+        <Transition
+          name="slide-fade"
+          mode="out-in"
+        >
+          <div
+            :key="currentSlide"
+            class="rounded-2xl border border-white/10 bg-[#161b22]/90 p-5 sm:p-8 shadow-2xl backdrop-blur-xl"
+          >
+            <span
+              v-if="slides[currentSlide].badge"
+              class="mb-2 sm:mb-3 inline-block rounded-full bg-secondary-500/20 px-3 py-1 text-xs font-semibold text-secondary-400"
+            >
+              {{ slides[currentSlide].badge }}
+            </span>
+
+            <h1 class="mb-2 sm:mb-3 text-xl sm:text-3xl font-bold">
+              {{ slides[currentSlide].title }}
+            </h1>
+
+            <p class="mb-4 sm:mb-6 text-xs sm:text-base text-gray-300">
+              {{ slides[currentSlide].description }}
+            </p>
+
+            <div
+              v-if="slides[currentSlide].specs"
+              class="flex flex-col gap-1.5 sm:gap-2 text-xs sm:text-sm"
+            >
+              <div
+                v-for="(val, key) in slides[currentSlide].specs"
+                :key="key"
+                class="flex justify-between rounded-lg bg-white/5 px-3 py-2"
+              >
+                <span class="text-gray-400">{{ key }} :</span>
+                <span class="font-semibold text-white">{{ val }}</span>
+              </div>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <div class="flex items-center justify-between pointer-events-auto">
+        <UButton
+          :disabled="currentSlide === 0"
+          class="cursor-pointer flex items-center gap-2 rounded-xl border border-white/10 bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-medium transition hover:bg-white/10 disabled:cursor-not-allowed"
+          @click="prevSlide"
+        >
+          ← Précédent
+        </UButton>
+
+        <UButton
+          :disabled="currentSlide === slides.length - 1"
+          class="cursor-pointer flex items-center gap-2 rounded-xl bg-secondary-600 px-5 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-medium text-white transition hover:bg-secondary-500 disabled:cursor-not-allowed"
+          @click="nextSlide"
+        >
+          Suivant →
+        </UButton>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-#hero {
-  background: linear-gradient(transparent, #000 25%)
+.slide-fade-enter-active {
+  transition: all 0.4s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.25s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from {
+  transform: translateY(15px) scale(0.97);
+  opacity: 0;
+}
+
+.slide-fade-leave-to {
+  transform: translateY(-15px) scale(0.97);
+  opacity: 0;
 }
 </style>
