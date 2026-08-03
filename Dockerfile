@@ -8,7 +8,7 @@ RUN corepack enable
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN pnpm i
+RUN pnpm i --unsafe-perm
 
 # Copy the entire project
 COPY . ./
