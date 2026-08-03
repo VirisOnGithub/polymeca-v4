@@ -75,6 +75,8 @@ const milestones = [
               v-for="(stat, index) in stats"
               :key="index"
               class="text-center hover:border-primary/50 transition-colors"
+              data-aos="fade-up"
+              :data-aos-delay="index * 100"
             >
               <div class="text-4xl lg:text-5xl font-extrabold text-primary mb-2">
                 {{ stat.value }}
@@ -134,6 +136,8 @@ const milestones = [
             v-for="(domain, index) in domains"
             :key="index"
             class="relative group"
+            data-aos="fade-up"
+            :data-aos-delay="index * 100"
           >
             <div class="flex items-center gap-4 mb-4">
               <UIcon
