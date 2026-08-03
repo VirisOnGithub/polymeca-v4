@@ -17,7 +17,7 @@
     >
       <div
         v-for="(box, index) in layout.boxes"
-        :key="loadedPhotos[index].src"
+        :key="getSource(loadedPhotos, index)"
         class="absolute overflow-hidden rounded-[8px] transition-all duration-200 ease-in"
         :style="{
           top: `${box.top}px`,
@@ -28,7 +28,7 @@
       >
         <img
           class="w-full h-full object-cover block"
-          :src="loadedPhotos[index].src"
+          :src="getSource(loadedPhotos, index)"
           :alt="`Photo ${index + 1}`"
           loading="lazy"
           data-aos="fade-up"
@@ -67,7 +67,14 @@ const containerWidth = ref(0)
 const isLoading = ref(true)
 const loadedPhotos = ref<PhotoMeta[]>([])
 
-// Fonction pour extraire les dimensions d'une image depuis son URL
+const getSource = (photos: PhotoMeta[], index: number): string => {
+  const photo = photos[index]
+  if (photo === undefined) {
+    return ''
+  }
+  return photo.src
+}
+
 const getImageDimensions = (url: string): Promise<PhotoMeta> => {
   return new Promise((resolve) => {
     const img = new Image()
@@ -79,14 +86,12 @@ const getImageDimensions = (url: string): Promise<PhotoMeta> => {
       })
     }
     img.onerror = () => {
-      // Dimension par défaut en cas d'erreur pour ne pas bloquer le reste
       resolve({ src: url, width: 800, height: 600 })
     }
     img.src = url
   })
 }
 
-// Fonction pour charger toutes les images en parallèle
 const processImages = async () => {
   isLoading.value = true
   if (!props.urls || props.urls.length === 0) {
@@ -102,7 +107,6 @@ const processImages = async () => {
   isLoading.value = false
 }
 
-// Calcul de la disposition Flickr
 const layout = computed(() => {
   if (!containerWidth.value || loadedPhotos.value.length === 0) {
     return { containerHeight: 0, boxes: [] }
@@ -139,7 +143,6 @@ onMounted(() => {
   }
 })
 
-// Recharger si la liste d'URLs change dynamiquement
 watch(() => props.urls, () => {
   processImages()
 }, { deep: true })

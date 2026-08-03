@@ -12,7 +12,19 @@ const carGroupRef = shallowRef()
 const cameraRef = shallowRef()
 const isMobile = ref(false)
 
-const slides = [
+interface Slide {
+  title: string
+  badge: string
+  description: string
+  rotation: number[]
+  positionDesktop: number[]
+  positionMobile: number[]
+  cameraZDesktop: number
+  cameraZMobile: number
+  specs?: object
+}
+
+const slides: Slide[] = [
   {
     title: 'Premier Modèle',
     badge: 'Prototype',
@@ -60,6 +72,10 @@ function updateResponsiveState() {
 function animateToSlide(index: number) {
   const slide = slides[index]
 
+  if (slide === undefined) {
+    return
+  }
+
   const targetPosY = isMobile.value ? slide.positionMobile[1] : slide.positionDesktop[1]
   const targetPosX = isMobile.value ? slide.positionMobile[0] : slide.positionDesktop[0]
   const targetPosZ = isMobile.value ? slide.positionMobile[2] || 0 : slide.positionDesktop[2] || 0
@@ -90,6 +106,23 @@ function animateToSlide(index: number) {
       ease: 'power2.inOut'
     })
   }
+}
+
+const getCurrentSlide = (slides: Slide[], index: number): Slide => {
+  const slide = slides[index]
+  if (slide === undefined) {
+    return {
+      title: '',
+      badge: '',
+      description: '',
+      rotation: [],
+      positionDesktop: [],
+      positionMobile: [],
+      cameraZDesktop: 0,
+      cameraZMobile: 0
+    }
+  }
+  return slide
 }
 
 function goToSlide(index: number) {
@@ -180,26 +213,26 @@ onUnmounted(() => {
             class="rounded-2xl border border-white/10 bg-[#161b22]/90 p-5 sm:p-8 shadow-2xl backdrop-blur-xl"
           >
             <span
-              v-if="slides[currentSlide].badge"
+              v-if="getCurrentSlide(slides, currentSlide).badge"
               class="mb-2 sm:mb-3 inline-block rounded-full bg-secondary-500/20 px-3 py-1 text-xs font-semibold text-secondary-400"
             >
-              {{ slides[currentSlide].badge }}
+              {{ getCurrentSlide(slides, currentSlide).badge }}
             </span>
 
             <h1 class="mb-2 sm:mb-3 text-xl sm:text-3xl font-bold">
-              {{ slides[currentSlide].title }}
+              {{ getCurrentSlide(slides, currentSlide).title }}
             </h1>
 
             <p class="mb-4 sm:mb-6 text-xs sm:text-base text-gray-300">
-              {{ slides[currentSlide].description }}
+              {{ getCurrentSlide(slides, currentSlide).description }}
             </p>
 
             <div
-              v-if="slides[currentSlide].specs"
+              v-if="getCurrentSlide(slides, currentSlide).specs"
               class="flex flex-col gap-1.5 sm:gap-2 text-xs sm:text-sm"
             >
               <div
-                v-for="(val, key) in slides[currentSlide].specs"
+                v-for="(val, key) in getCurrentSlide(slides, currentSlide).specs"
                 :key="key"
                 class="flex justify-between rounded-lg bg-white/5 px-3 py-2"
               >
