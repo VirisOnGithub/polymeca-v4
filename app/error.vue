@@ -1,31 +1,47 @@
 <script setup lang="ts">
-// Récupération de l'erreur transmise par Nuxt
-defineProps({
-  error: Object
-})
+import type { NuxtError } from '#app'
 
-// Fonction pour nettoyer l'erreur et rediriger
-const handleClearError = () => {
-  clearError({ redirect: '/' })
-}
+const props = defineProps<{ error: NuxtError }>()
+
+const handleClearError = () => clearError({ redirect: '/' })
+
+useHead({
+  title: 'Erreur',
+  meta: [
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+  ],
+  link: [
+    { rel: 'icon', href: '/logo.png' }
+  ],
+  htmlAttrs: {
+    lang: 'fr'
+  }
+})
 </script>
 
 <template>
-  <div class="error-container">
-    <template v-if="error?.statusCode === 404">
-      <h1>404</h1>
-      <h2>Oups ! Page introuvable.</h2>
-      <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
-    </template>
-
-    <template v-else>
-      <h1>{{ error?.statusCode || 'Erreur' }}</h1>
-      <h2>Une erreur est survenue</h2>
-      <p>{{ error?.statusMessage || 'Un problème inattendu s\'est produit.' }}</p>
-    </template>
-
-    <button @click="handleClearError">
-      Retourner à l'accueil
-    </button>
-  </div>
+  <NuxtLayout>
+    <div class="h-4/5 w-full flex flex-col items-center gap-6">
+      <h2 class="text-6xl">
+        Erreur {{ props.error?.status }}
+      </h2>
+      <h4 class="text-3xl">
+        {{ props.error?.statusText }}
+      </h4>
+      <UButton
+        class="cursor-pointer"
+        @click="handleClearError"
+      >
+        <UBadge
+          color="secondary"
+          variant="solid"
+          size="xl"
+          trailing-icon="i-lucide-arrow-right"
+          class="rounded-lg hover:scale-110 duration-200 ease-in"
+        >
+          Revenir à l'accueil
+        </UBadge>
+      </UButton>
+    </div>
+  </NuxtLayout>
 </template>
