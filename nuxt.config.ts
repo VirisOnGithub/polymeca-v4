@@ -5,7 +5,6 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     'nuxt-aos',
     '@nuxt/image',
-    // 'gsap',
     '@tresjs/nuxt'
   ],
 
@@ -26,8 +25,7 @@ export default defineNuxtConfig({
         '@tresjs/cientos',
         '@tresjs/core',
         'three',
-        'justified-layout', // CJS
-        'vue3-marquee'
+        'justified-layout'
       ]
     }
   },

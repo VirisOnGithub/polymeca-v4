@@ -11,7 +11,6 @@ const props = defineProps<{
 
 <template>
   <UMarquee
-    :duration="10"
     class=" bg-gray-100/15"
   >
     <NuxtImg

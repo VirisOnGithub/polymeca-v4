@@ -183,7 +183,13 @@ const milestones = [
                 v-if="event.location"
                 class="text-xs font-mono text-gray-400 mb-2"
               >
-                📍 {{ event.location }}
+                <UBadge
+                  icon="mdi:google-maps"
+                  color="secondary"
+                  variant="outline"
+                >
+                  {{ event.location }}
+                </UBadge>
               </p>
               <p class="text-gray-300 text-sm">
                 {{ event.description }}
