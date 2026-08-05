@@ -48,7 +48,7 @@ const poles = [
       <div
         v-for="member in poles"
         :key="member.role"
-        class="bg-neutral-900 m-2 p-4 rounded-2xl flex gap-4"
+        class="bg-neutral-100 dark:bg-neutral-900 m-2 p-4 rounded-2xl flex gap-4"
         data-aos="fade-down"
       >
         <div>

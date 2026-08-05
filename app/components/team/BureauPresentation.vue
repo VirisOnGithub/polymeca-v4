@@ -16,7 +16,7 @@ const bureau = [
       <div
         v-for="(member, index) in bureau"
         :key="member.role"
-        class="bg-neutral-900 m-2 p-4 rounded-2xl"
+        class="bg-neutral-100 dark:bg-neutral-900 m-2 p-4 rounded-2xl"
         data-aos="zoom-in-up"
         :data-aos-delay="index * 100"
       >

@@ -4,6 +4,8 @@ import { GLTFModel } from '@tresjs/cientos'
 import { TresCanvas } from '@tresjs/core'
 import gsap from 'gsap'
 
+const colorMode = useColorMode()
+
 definePageMeta({
   hideFrontSpace: true
 })
@@ -156,10 +158,10 @@ onUnmounted(() => {
 
 <template>
   <!-- 100 vh - footer - main padding -->
-  <div class="relative h-[calc(100vh-80px-40px)] w-full overflow-hidden bg-[#0d1117] text-white select-none">
+  <div class="relative h-[calc(100vh-80px-40px)] w-full overflow-hidden bg-[#f3eee9] dark:bg-[#0d1117] text-white select-none">
     <div class="absolute inset-0 z-0">
       <ClientOnly>
-        <TresCanvas clear-color="#0d1117">
+        <TresCanvas :clear-color="colorMode.value === 'dark' ? '#0d1117' : '#f3eee9'">
           <TresPerspectiveCamera
             ref="cameraRef"
             :position="[0, 1.5, 4.5]"
@@ -196,7 +198,7 @@ onUnmounted(() => {
             v-for="(_, index) in slides"
             :key="index"
             class="h-2 rounded-full transition-all duration-300"
-            :class="currentSlide === index ? 'w-8 bg-secondary-500' : 'w-2 bg-white/20 hover:bg-white/40'"
+            :class="currentSlide === index ? 'w-8 bg-secondary-500' : 'w-2 bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40'"
             :aria-label="`Aller à la diapositive ${index + 1}`"
             @click="goToSlide(index)"
           />
@@ -210,7 +212,7 @@ onUnmounted(() => {
         >
           <div
             :key="currentSlide"
-            class="rounded-2xl border border-white/10 bg-[#161b22]/90 p-5 sm:p-8 shadow-2xl backdrop-blur-xl"
+            class="rounded-2xl border border-black/10 dark:border-white/10 bg-[#eae4dd]/90 dark:bg-[#161b22]/90 p-5 sm:p-8 shadow-2xl backdrop-blur-xl"
           >
             <span
               v-if="getCurrentSlide(slides, currentSlide).badge"
@@ -219,11 +221,11 @@ onUnmounted(() => {
               {{ getCurrentSlide(slides, currentSlide).badge }}
             </span>
 
-            <h1 class="mb-2 sm:mb-3 text-xl sm:text-3xl font-bold">
+            <h1 class="mb-2 sm:mb-3 text-xl sm:text-3xl font-bold text-black dark:text-white">
               {{ getCurrentSlide(slides, currentSlide).title }}
             </h1>
 
-            <p class="mb-4 sm:mb-6 text-xs sm:text-base text-gray-300">
+            <p class="mb-4 sm:mb-6 text-xs sm:text-base text-gray-600 dark:text-gray-300">
               {{ getCurrentSlide(slides, currentSlide).description }}
             </p>
 
@@ -234,10 +236,10 @@ onUnmounted(() => {
               <div
                 v-for="(val, key) in getCurrentSlide(slides, currentSlide).specs"
                 :key="key"
-                class="flex justify-between rounded-lg bg-white/5 px-3 py-2"
+                class="flex justify-between rounded-lg bg-black/5 dark:bg-white/5 px-3 py-2"
               >
-                <span class="text-gray-400">{{ key }} :</span>
-                <span class="font-semibold text-white">{{ val }}</span>
+                <span class="text-gray-500 dark:text-gray-400">{{ key }} :</span>
+                <span class="font-semibold text-black dark:text-white">{{ val }}</span>
               </div>
             </div>
           </div>
@@ -247,7 +249,7 @@ onUnmounted(() => {
       <div class="flex items-center justify-between pointer-events-auto">
         <UButton
           :disabled="currentSlide === 0"
-          class="cursor-pointer flex items-center gap-2 rounded-xl border border-white/10 bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-medium transition hover:bg-white/10 disabled:cursor-not-allowed"
+          class="cursor-pointer flex items-center gap-2 rounded-xl border border-black/10 dark:border-white/10 bg-black dark:bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-medium transition hover:bg-dark/10 dark:hover:bg-white/10 disabled:cursor-not-allowed"
           @click="prevSlide"
         >
           ← Précédent

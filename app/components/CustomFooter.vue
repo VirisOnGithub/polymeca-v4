@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const colorMode = useColorMode()
+
 const socials = [
   {
     link: 'https://www.instagram.com/polytechracingteam/',
@@ -19,7 +21,7 @@ const socials = [
 </script>
 
 <template>
-  <UFooter class="bg-black">
+  <UFooter class="bg-white dark:bg-black">
     <template #left>
       <div>
         <p class="text-sm text-muted">
@@ -34,11 +36,11 @@ const socials = [
 
     <div class="grid gap-6 text-sm md:grid-cols-2">
       <div>
-        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-white/70">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-black/70 dark:text-white/70">
           Contact
         </p>
 
-        <ul class="space-y-3 text-white/60">
+        <ul class="space-y-3 text-black/60 dark:text-white/60">
           <li class="flex items-start gap-2">
             <UIcon
               name="mdi:email-outline"
@@ -63,11 +65,11 @@ const socials = [
       </div>
 
       <div>
-        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-white/70">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-black/70 dark:text-white/70">
           Adresse
         </p>
 
-        <div class="flex items-start gap-2 text-white/60">
+        <div class="flex items-start gap-2 text-black/60 dark:text-white/60">
           <UIcon
             name="mdi:map-marker"
             class="mt-0.5 size-5 bg-secondary"
@@ -89,7 +91,7 @@ const socials = [
         target="_blank"
         :icon="social.icon"
         :aria-label="social.aria_label"
-        color="neutral"
+        :color="colorMode.preference === 'dark' ? 'neutral' : 'secondary'"
         variant="ghost"
       />
     </template>

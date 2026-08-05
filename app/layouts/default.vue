@@ -6,7 +6,7 @@ const route = useRoute()
   <UApp>
     <CustomHeader />
 
-    <UMain class="bg-black font-[Racing_Sans_One] p-5">
+    <UMain class="bg-white dark:bg-black font-[Racing_Sans_One] p-5">
       <div
         v-if="!route.meta.hideFrontSpace"
         class="h-50"

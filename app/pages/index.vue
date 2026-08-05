@@ -7,7 +7,7 @@ definePageMeta({
 const stats = [
   { label: 'Membres passionnés', value: '50+' },
   { label: 'Année de création', value: '2023' },
-  { label: 'Compétition courue', value: '1', detail: 'Formula Student' },
+  { label: 'Compétition', value: '1', detail: 'Formula Student' },
   { label: 'Partenaires de confiance', value: '10+' }
 ]
 
@@ -81,7 +81,7 @@ const milestones = [
               <div class="text-4xl lg:text-5xl font-extrabold text-primary mb-2">
                 {{ stat.value }}
               </div>
-              <div class="font-semibold text-gray-200">
+              <div class="font-semibold dark:text-gray-200 text-gray-400">
                 {{ stat.label }}
               </div>
               <div
@@ -109,7 +109,7 @@ const milestones = [
               variant="solid"
               size="xl"
               trailing-icon="i-lucide-arrow-right"
-              class="rounded-lg hover:scale-110 duration-200 ease-in"
+              class="rounded-lg hover:scale-110 duration-200 ease-in text-black"
             >
               Voir notre équipe
             </UBadge>
@@ -166,10 +166,10 @@ const milestones = [
           <div
             v-for="(event, index) in milestones"
             :key="index"
-            class="rounded-2xl border-2 border-transparent bg-origin-border [background-clip:padding-box,border-box] bg-[linear-gradient(to_right_top,#000,var(--ui-bg)),linear-gradient(to_right_top,#0f172a,var(--color-secondary))] hover:scale-102 p-6 duration-200"
+            class="rounded-2xl border-2 border-transparent bg-origin-border [background-clip:padding-box,border-box] dark:bg-[linear-gradient(to_right_top,var(--ui-bg),var(--ui-bg)),linear-gradient(to_right_top,#0f172a,var(--color-secondary))] bg-[linear-gradient(to_right_top,var(--ui-bg),var(--ui-bg)),linear-gradient(to_right_top,#fff,var(--color-secondary))] hover:scale-102 p-6 duration-200"
           >
             <div class="relative pl-8 border-l-2 border-primary/30 transition-colors py-2">
-              <div class="absolute -left-2.25 top-3 w-4 h-4 rounded-full bg-white" />
+              <div class="absolute -left-2.25 top-3 w-4 h-4 rounded-full bg-black dark:bg-white" />
 
               <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
                 <h4 class="text-xl font-bold">
@@ -181,7 +181,7 @@ const milestones = [
               </div>
               <p
                 v-if="event.location"
-                class="text-xs font-mono text-gray-400 mb-2"
+                class="text-xs font-mono mb-2"
               >
                 <UBadge
                   icon="mdi:google-maps"
@@ -191,7 +191,7 @@ const milestones = [
                   {{ event.location }}
                 </UBadge>
               </p>
-              <p class="text-gray-300 text-sm">
+              <p class="text-gray-400 dark:text-gray-300 text-sm">
                 {{ event.description }}
               </p>
             </div>

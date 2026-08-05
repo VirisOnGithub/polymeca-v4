@@ -15,7 +15,7 @@ const truncated_desc = props.article.description.slice(0, 100) + '...'
 </script>
 
 <template>
-  <UCard class="bg-gray-800 rounded-xl p-6">
+  <UCard class="bg-gray-200 dark:bg-gray-800 rounded-xl p-6">
     <div class="h-64 sm:h-80 lg:h-full overflow-hidden rounded-lg">
       <img
         :src="props.article.splash"

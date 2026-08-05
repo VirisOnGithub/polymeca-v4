@@ -13,7 +13,7 @@ const teachers = [
       <div
         v-for="member in teachers"
         :key="member.role"
-        class="bg-neutral-900 m-2 p-4 rounded-2xl flex gap-6 items-center"
+        class="bg-neutral-100 dark:bg-neutral-900 m-2 p-4 rounded-2xl flex gap-6 items-center"
       >
         <div>
           <div class="bg-secondary-300/15 size-15 rounded-2xl grid place-items-center">
