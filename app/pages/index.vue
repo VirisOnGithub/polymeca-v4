@@ -5,7 +5,7 @@ definePageMeta({
 
 // Données des statistiques
 const stats = [
-  { label: 'Membres passionnés', value: '50+' },
+  { label: 'Membres passionnés', value: '20+' },
   { label: 'Année de création', value: '2023' },
   { label: 'Compétition', value: '1', detail: 'Formula Student' },
   { label: 'Partenaires de confiance', value: '10+' }

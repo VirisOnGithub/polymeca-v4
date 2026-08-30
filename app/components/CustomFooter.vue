@@ -1,42 +1,39 @@
 <script setup lang="ts">
-const colorMode = useColorMode()
+const colorMode = useColorMode();
 
 const socials = [
   {
-    link: 'https://www.instagram.com/polytechracingteam/',
-    aria_label: 'Instagram',
-    icon: 'i-simple-icons-instagram'
+    link: "https://www.instagram.com/polytechracingteam/",
+    aria_label: "Instagram",
+    icon: "i-simple-icons-instagram",
   },
   {
-    link: 'https://www.linkedin.com/company/poly-mechanic/',
-    aria_label: 'LinkedIn',
-    icon: 'i-simple-icons-linkedin'
+    link: "https://www.linkedin.com/company/poly-mechanic/",
+    aria_label: "LinkedIn",
+    icon: "i-simple-icons-linkedin",
   },
   {
-    link: 'https://www.facebook.com/polymechanicasso/',
-    aria_label: 'Facebook',
-    icon: 'i-simple-icons-facebook'
-  }
-]
+    link: "https://www.facebook.com/polymechanicasso/",
+    aria_label: "Facebook",
+    icon: "i-simple-icons-facebook",
+  },
+];
 </script>
 
 <template>
   <UFooter class="bg-white dark:bg-black">
     <template #left>
       <div>
-        <p class="text-sm text-muted">
-          POLYTECH RACING TEAM
-        </p>
-        <NuxtImg
-          src="/logo.png"
-          class="h-20"
-        />
+        <p class="text-sm text-muted">POLYTECH RACING TEAM</p>
+        <NuxtImg src="/logo.png" class="h-20" />
       </div>
     </template>
 
     <div class="grid gap-6 text-sm md:grid-cols-2">
       <div>
-        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-black/70 dark:text-white/70">
+        <p
+          class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-black/70 dark:text-white/70"
+        >
           Contact
         </p>
 
@@ -65,15 +62,14 @@ const socials = [
       </div>
 
       <div>
-        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-black/70 dark:text-white/70">
+        <p
+          class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-black/70 dark:text-white/70"
+        >
           Adresse
         </p>
 
         <div class="flex items-start gap-2 text-black/60 dark:text-white/60">
-          <UIcon
-            name="mdi:map-marker"
-            class="mt-0.5 size-5 bg-secondary"
-          />
+          <UIcon name="mdi:map-marker" class="mt-0.5 size-5 bg-secondary" />
           <div class="leading-relaxed">
             <p>POLYTECH LYON</p>
             <p>15 boulevard André Latarjet</p>
@@ -84,16 +80,30 @@ const socials = [
     </div>
 
     <template #right>
-      <UButton
-        v-for="social in socials"
-        :key="social.aria_label"
-        :to="social.link"
-        target="_blank"
-        :icon="social.icon"
-        :aria-label="social.aria_label"
-        :color="colorMode.preference === 'dark' ? 'neutral' : 'secondary'"
-        variant="ghost"
-      />
+      <div class="flex flex-col items-center justify-center">
+        <div class="">
+          <UButton
+            v-for="social in socials"
+            :key="social.aria_label"
+            :to="social.link"
+            target="_blank"
+            :icon="social.icon"
+            :aria-label="social.aria_label"
+            :color="colorMode.preference === 'dark' ? 'neutral' : 'secondary'"
+            variant="ghost"
+          />
+        </div>
+        <p class="text-muted text-sm pt-4">
+          Designé et créé par
+          <NuxtLink
+            to="https://clement-reniers.fr"
+            class="text-secondary underline"
+            target="_blank"
+          >
+            Clément RENIERS
+          </NuxtLink>
+        </p>
+      </div>
     </template>
   </UFooter>
 </template>
